@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Mobile meta tags to go in head-->
+		<meta name="HandheldFriendly" content="True">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="MobileOptimized" content="320"/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta http-equiv="cleartype" content="on">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+	.leaflet-popup-content > table img {
+    width: 450px;
+   }
+	.leaflet-popup-content {
+min-width: 200px;
+min-height: 100px;
+overflow-y: scroll;
+}
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.wms.js"></script>
+        <script src="data/MergedGeology_1.js"></script>
+        <script src="data/photos_4.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:11
+        }).fitBounds([[55.785699616400514,-3.360833484559876],[55.79848794163833,-3.31257171770339]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GBRBGS150kBedrock_0');
+        map.getPane('pane_GBRBGS150kBedrock_0').style.zIndex = 400;
+        var layer_GBRBGS150kBedrock_0 = L.WMS.layer("https://map.bgs.ac.uk/arcgis/services/BGS_Detailed_Geology/MapServer/WMSServer?", "BGS.50k.Bedrock", {
+            pane: 'pane_GBRBGS150kBedrock_0',
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+            attribution: '',
+        });
+        map.addLayer(layer_GBRBGS150kBedrock_0);
+        function pop_MergedGeology_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FM_EQ_D'] !== null ? autolinker.link(feature.properties['FM_EQ_D'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MAX_AGE'] !== null ? autolinker.link(feature.properties['MAX_AGE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MAX_PERIOD'] !== null ? autolinker.link(feature.properties['MAX_PERIOD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MergedGeology_1_0(feature) {
+            switch(String(feature.properties['q2wHide_LEX_RCS'])) {
+                case 'ALMR-ABAN':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(176,117,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(176,117,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'AUC-SDST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,237,201,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,237,201,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'BDD-MDST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,201,201,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,201,201,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'BGRV-RYTUF':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,176,117,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,176,117,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'BLLS-LMST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(0,255,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,255,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'CDE-CYCS':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,219,219,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,219,219,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'CKRI-CONG':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,219,117,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,219,117,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'CKRI-SDST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,219,117,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,219,117,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'CPV-BAOM':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,117,176,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,117,176,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'CPV-TUF':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,201,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,201,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'DHP-MDSI':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,219,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,219,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'GHD-SIMD':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,201,201,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,201,201,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'GRWC-CONG':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(201,117,51,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,117,51,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'GRWC-SDST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(201,117,51,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,117,51,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'HON-BA':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,84,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,84,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'HON-CYCS':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(117,201,201,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(117,201,201,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'HSW-CONG':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,219,237,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,219,237,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'HSW-MDSI':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,219,237,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,219,237,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'HSW-SDST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,219,237,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,219,237,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'HUR-LMST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(0,255,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,255,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'IC-CONG':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,201,237,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,201,237,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'KNW-CLCRET':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,117,117,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,117,117,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'KNW-SDST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,117,117,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,117,117,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'LAR-SISD':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,201,201,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,201,201,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'LLGS-CYCC':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(201,255,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,255,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'LLGS-LMST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(201,255,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,255,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'LYW-QDI':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(148,0,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(148,0,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'PDH-BCLACL':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(201,201,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,201,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'PDH-RY':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,219,0,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,219,0,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'PDH-TR':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,201,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,201,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'PDNB-BA':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,0,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'QZT-CONG':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,201,201,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,201,201,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'RSVR-MDSI':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,219,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,219,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'SDCAD-MAFI':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,201,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,201,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'SDCAD-MCDIR':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(117,0,255,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(117,0,255,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'SSDPV-BA':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(255,84,176,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,84,176,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'SWAS-CONG':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(201,117,51,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,117,51,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'SWAS-SDST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(201,117,51,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,117,51,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'SYG-CYCS':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(201,201,201,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,201,201,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'SYG-LMST':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(148,255,219,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(148,255,219,0.055)',
+                interactive: true,
+            }
+                    break;
+                case 'WLN-MDSI':
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(219,201,201,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,201,201,0.055)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_MergedGeology_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.055)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,113,141,0.055)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_MergedGeology_1');
+        map.getPane('pane_MergedGeology_1').style.zIndex = 401;
+        map.getPane('pane_MergedGeology_1').style['mix-blend-mode'] = 'normal';
+        var layer_MergedGeology_1 = new L.geoJson(json_MergedGeology_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MergedGeology_1',
+            layerName: 'layer_MergedGeology_1',
+            pane: 'pane_MergedGeology_1',
+            onEachFeature: pop_MergedGeology_1,
+            style: style_MergedGeology_1_0,
+        });
+        bounds_group.addLayer(layer_MergedGeology_1);
+        map.addLayer(layer_MergedGeology_1);
+        map.createPane('pane_googleearth_2');
+        map.getPane('pane_googleearth_2').style.zIndex = 402;
+        var layer_googleearth_2 = L.tileLayer('https://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}&s=Ga', {
+            pane: 'pane_googleearth_2',
+            opacity: 0.715,
+            attribution: '',
+            minZoom: 11,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_googleearth_2;
+        map.addLayer(layer_googleearth_2);
+        map.createPane('pane_GBRBGS150kLinearfeatures_3');
+        map.getPane('pane_GBRBGS150kLinearfeatures_3').style.zIndex = 403;
+        var layer_GBRBGS150kLinearfeatures_3 = L.WMS.layer("https://map.bgs.ac.uk/arcgis/services/BGS_Detailed_Geology/MapServer/WMSServer?", "BGS.50k.Linear.features", {
+            pane: 'pane_GBRBGS150kLinearfeatures_3',
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+            attribution: '',
+        });
+        map.addLayer(layer_GBRBGS150kLinearfeatures_3);
+        function pop_photos_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Title'] !== null ? autolinker.link(feature.properties['Title'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Comment'] !== null ? autolinker.link(feature.properties['Comment'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['RelPath'] !== null ? '<img src="images/' + String(feature.properties['RelPath']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_photos_4_0() {
+            return {
+                pane: 'pane_photos_4',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(50,87,128,0.851)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(72,123,182,0.851)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_photos_4');
+        map.getPane('pane_photos_4').style.zIndex = 404;
+        map.getPane('pane_photos_4').style['mix-blend-mode'] = 'normal';
+        var layer_photos_4 = new L.geoJson(json_photos_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_photos_4',
+            layerName: 'layer_photos_4',
+            pane: 'pane_photos_4',
+            onEachFeature: pop_photos_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_photos_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_photos_4);
+        map.addLayer(layer_photos_4);
+        var baseMaps = {};
+        /*L.control.layers(baseMaps,{'<img src="legend/photos_4.png" /> photos': layer_photos_4,"GBR BGS 1:50k Linear features": layer_GBRBGS150kLinearfeatures_3,"google earth": layer_googleearth_2,'MergedGeology<br /><table><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_ALMRABAN0.png" /></td><td>ALMR-ABAN</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_AUCSDST1.png" /></td><td>AUC-SDST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_BDDMDST2.png" /></td><td>BDD-MDST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_BGRVRYTUF3.png" /></td><td>BGRV-RYTUF</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_BLLSLMST4.png" /></td><td>BLLS-LMST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_CDECYCS5.png" /></td><td>CDE-CYCS</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_CKRICONG6.png" /></td><td>CKRI-CONG</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_CKRISDST7.png" /></td><td>CKRI-SDST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_CPVBAOM8.png" /></td><td>CPV-BAOM</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_CPVTUF9.png" /></td><td>CPV-TUF</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_DHPMDSI10.png" /></td><td>DHP-MDSI</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_GHDSIMD11.png" /></td><td>GHD-SIMD</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_GRWCCONG12.png" /></td><td>GRWC-CONG</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_GRWCSDST13.png" /></td><td>GRWC-SDST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_HONBA14.png" /></td><td>HON-BA</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_HONCYCS15.png" /></td><td>HON-CYCS</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_HSWCONG16.png" /></td><td>HSW-CONG</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_HSWMDSI17.png" /></td><td>HSW-MDSI</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_HSWSDST18.png" /></td><td>HSW-SDST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_HURLMST19.png" /></td><td>HUR-LMST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_ICCONG20.png" /></td><td>IC-CONG</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_KNWCLCRET21.png" /></td><td>KNW-CLCRET</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_KNWSDST22.png" /></td><td>KNW-SDST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_LARSISD23.png" /></td><td>LAR-SISD</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_LLGSCYCC24.png" /></td><td>LLGS-CYCC</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_LLGSLMST25.png" /></td><td>LLGS-LMST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_LYWQDI26.png" /></td><td>LYW-QDI</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_PDHBCLACL27.png" /></td><td>PDH-BCLACL</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_PDHRY28.png" /></td><td>PDH-RY</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_PDHTR29.png" /></td><td>PDH-TR</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_PDNBBA30.png" /></td><td>PDNB-BA</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_QZTCONG31.png" /></td><td>QZT-CONG</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_RSVRMDSI32.png" /></td><td>RSVR-MDSI</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_SDCADMAFI33.png" /></td><td>SDCAD-MAFI</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_SDCADMCDIR34.png" /></td><td>SDCAD-MCDIR</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_SSDPVBA35.png" /></td><td>SSDPV-BA</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_SWASCONG36.png" /></td><td>SWAS-CONG</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_SWASSDST37.png" /></td><td>SWAS-SDST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_SYGCYCS38.png" /></td><td>SYG-CYCS</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_SYGLMST39.png" /></td><td>SYG-LMST</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_WLNMDSI40.png" /></td><td>WLN-MDSI</td></tr><tr><td style="text-align: center;"><img src="legend/MergedGeology_1_41.png" /></td><td></td></tr></table>': layer_MergedGeology_1,"GBR BGS 1:50k Bedrock": layer_GBRBGS150kBedrock_0,}).addTo(map);*/
+        L.control.layers(baseMaps,{' photos': layer_photos_4,"GBR BGS 1:50k Linear features": layer_GBRBGS150kLinearfeatures_3,"google earth": layer_googleearth_2,"GBR BGS 1:50k Bedrock": layer_GBRBGS150kBedrock_0,}).addTo(map);
+		setBounds();
+        </script>
+    </body>
+</html>
